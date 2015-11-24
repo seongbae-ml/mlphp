@@ -61,7 +61,7 @@ class SearchResult
             if (array_key_exists($name, $this->metadata)) {
                 $this->metadata[$name][] = $val;
             } else {
-                $this->metadata[$name] = [$val];
+                $this->metadata[$name] = array($val);
             }
 
         }
