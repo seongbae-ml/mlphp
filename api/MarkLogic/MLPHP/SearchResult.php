@@ -35,6 +35,9 @@ class SearchResult
     private $metadata; // @var array
     private $similar; // @var array
 
+    private $result;
+    private $url;
+
     /**
      * Create a SearchResult object.
      *
@@ -42,12 +45,14 @@ class SearchResult
      */
     public function __construct($result)
     {
+        $this->result = $result;
         $this->index = $result->getAttribute('index');
         $this->uri = $result->getAttribute('uri');
         $this->path = $result->getAttribute('path');
         $this->score = $result->getAttribute('score');
         $this->confidence = $result->getAttribute('confidence');
         $this->fitness = $result->getAttribute('fitness');
+        $this->url = $result->getAttribute('url');
         $matches = $result->getElementsByTagName('match');
         foreach ($matches as $m) {
             $match = new Match($m);
@@ -70,6 +75,8 @@ class SearchResult
         foreach ($similar as $sim) {
             $this->similar[] = $sim->nodeValue;
         }
+
+       
     }
 
     /**
@@ -174,4 +181,26 @@ class SearchResult
     {
         return $this->similar;
     }
+
+    /**
+     * Get similar documents.
+     *
+     * @return array Array of document URIs.
+     */
+    public function getURL()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Get similar documents.
+     *
+     * @return array Array of document URIs.
+     */
+    public function getCustomElementValue($elemName)
+    {
+        return $this->result->getElementsByTagname($elemName)->item(0)->nodeValue;
+    }
+
+    
 }
